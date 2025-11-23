@@ -75,7 +75,7 @@ End:
 #   Select class  (x)
 #   Initial items (x)
 #   Initial stats (x)
-#   Stats structure = what I need to add: damage based on status (x), block based on strength ( ), mana based on intelligence ( ), pickpocket based on dexterity ( ), dodge based on dexterity ( )
+#   Stats structure = what I need to add: damage based on status (x), mana based on intelligence (x)
 
 # Variable World
 world_difficulty = str()
@@ -87,7 +87,8 @@ information_player = {
     "block": 35,
     "class": "",
     "inventory": ['health_potion'],
-    "gold": 100
+    "gold": 100,
+    "mana": 50
 } 
 
 player_stats = {
@@ -95,6 +96,16 @@ player_stats = {
     "intelligence": 1,
     "dexterity": 1,
 }
+
+# Variable Enemys
+rats = {
+    "life": 250,
+    "damage": 35,
+    "block": 0,
+    "gold": 25
+}
+
+
 
 def start_game():
     print("1.   Start Game")
@@ -119,6 +130,8 @@ def start_game():
         os.system('cls')
         game_history(1)
         select_class()
+        while chapter_1():
+            mother_history()
     else:
         print("Have a good day")
 
@@ -133,16 +146,73 @@ def game_history(history):
                 skip_history = True
 
     history1 = "\nAn adventurer left the house he inherited from his missing father, leaving his mother to take care of it as he set out to explore the world.\n"
+    mother_history = '''
+    Mother:
+    “So… the day has finally come for you to leave.”
+    She tries to smile, but her eyes reveal the fear of someone who has already lost someone once.
+
+    You:
+    “I have to find out what happened to Dad. And I want to see the world outside. I can’t stay here forever.”
+
+    Mother:
+    “Your father said the exact same thing…”
+    She places her hand on your shoulder.
+    “And the world answered him with silence.”
+
+    You:
+    “I’m not him. And I’ll come back — I promise.”
+
+    Mother:
+    She takes a slow breath, trying to hide her worry.
+    “Promises are easy before crossing the door. Still… I believe in you.”
+
+    You:
+    “I’ll honor what he left me — the house, the memories… and the path.”
+
+    Mother:
+    “Take this.”
+    She hands you a small, worn amulet.
+    “Your father used to carry it when he was young. He said it brought him luck. Maybe it will work… if you still believe in such things.”
+
+    You:
+    “Thank you, Mother.”
+
+    Mother:
+    “And remember,” she says, her voice firm now,
+    “the world changes depending on the difficulty you choose to face. Be wise in your battles, humble in your victories, and brave in your defeats.”
+
+    She pulls you into a tight hug.
+
+    Mother:
+    “Now go… before I ask you to stay.”
+
+    '''
+    tutorial_combat = '''
+As soon as he left home and followed the old trail, the young adventurer heard quick scratches nearby. From behind some broken crates, a group of oversized rats appeared, hissing and ready to attack.
+
+It wasn’t a great danger — just a first test. He tightened his grip on his weapon. The journey had truly begun.
+'''
     history2 = "\nSun, the darkness takes me. I believe in you; one day, you will follow my path — the vulc...\n"
     history3 = "\nThe father returned to his normal self, the world’s corruption vanished, and the young explorer returned home alongside his father.\n"
 
     if history == 1:
+        os.system('cls')
         print(history1)
         skip_history_function()
+    elif history == 1.1:
+        os.system('cls')
+        print(mother_history)
+        skip_history_function()
+    elif history == 1.2:
+        os.system('cls')
+        print(tutorial_combat)
+        skip_history_function()
     elif history == 2:
+        os.system('cls')
         print(history2)
         skip_history_function()
     elif history == 3:
+        os.system('cls')
         print(history3)
         skip_history_function()
     else:
@@ -164,7 +234,9 @@ def select_class():
         print(f"\nYou picked Mage")
         information_player["class"] = "mage"
         player_stats["intelligence"] += 1
+        information_player["mana"] += 100
         information_player["inventory"].append("mana_potion")
+        mana_up()
     elif user_choice_class == 3:
         print(f"\nYou picked Rogue")
         information_player["class"] = "rogue"
@@ -182,4 +254,24 @@ def class_damage_up():
     elif information_player["class"] == "rogue":
         information_player["damage"] += (player_stats["dexterity"] * 10)
 
-start_game()
+def mana_up():
+    information_player["mana"] += (player_stats["intelligence"] * 10)
+
+def combat_menu():
+    for c in information_player:
+        print(f"{information_player[c]}")
+
+#   Function combat encounter
+"""def combat_rats():
+    print("Rats apears!")
+    while rats["life"]:
+"""
+
+
+#def chapter_1():
+ #   game_history(1.1)
+  #  game_history(1.2)
+
+#start_game()
+
+combat_menu()
