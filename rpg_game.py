@@ -1,36 +1,36 @@
 # Imports
 import random
 import os
-
+import time
 
 """
 Principal: Start, Middle, End
 
-
 Rule History: A man. The world is a classic RPG.
 
 History:
-    1. An adventurer left the house he inherited from his missing father, leaving his mother to take care of it as he set out to explore the world.
-    2. Sun, the darkness takes me. I believe in you; one day, you will follow my path — the vulc...
+    1. An adventurer left the house he inherited from his missing father,
+       leaving his mother to take care of it as he set out to explore the world.
+    2. Sun, the darkness takes me. I believe in you; one day, you will follow my path — the volc...
     3.1 The father appears, but it isn’t him — the darkness has taken him.
     Extra: Happy ending.
 
-
 Systems:
-    Chance: We'll have a chance-based impact system with items (successfully: escape, defense — passives: block, dodge).
-    Chance-Encounters: Basically mini-encounters resolved based on status.
+    Chance: We’ll have a chance-based impact system with items
+            (successfully: escape, defense — passives: block, dodge).
+    Chance-Encounters: Mini-encounters resolved based on stats.
     Difficulty System:
         Easy: 90%  |  Medium: 75%  |  Hard: 50%
-        (Basically, the world has a difficulty level, and each NPC, battle, and skill interacts with this world difficulty.)
+        (The world has a difficulty level, and NPCs, battles, and skills interact with it.)
 
 Start:
-    1.  Story 1
-    2.  Predefined character.
-    3.  Classes = Mage, Warrior, and Rogue (each class has its own advantages).
+    1. Story 1
+    2. Predefined character.
+    3. Classes = Mage, Warrior, Rogue (each class has its own advantages).
 ----------------------------------------------------------------------------
-    1.1 Initial Items – (each class has exclusive starting items).
-    1.2 Initial Status – (each class has predefined starting stats).
-    1.3 Difficulty – Easy, Normal, Hard.
+    1.1 Initial Items – each class has exclusive starting items.
+    1.2 Initial Stats – each class has predefined starting stats.
+    1.3 Difficulty – Easy, Medium, Hard.
 ----------------------------------------------------------------------------
     2.1 Talk to mother – Luck test
     2.2 First combat with rats
@@ -38,14 +38,14 @@ Start:
 ----------------------------------------------------------------------------
 
 Middle:
-    1.  After camping, perform Tests (Luck, Intelligence, Strength)
+    1. After camping, perform Tests (Luck, Intelligence, Strength)
             1.1 Luck – After sleeping, find an item. Failed = battle
-            1.2 Intelligence – Wake up early to avoid bandits. Failed = battle
+            1.2 Intelligence – Wake early and avoid bandits. Failed = battle
             1.3 Strength – Start a battle with advantage. Failed = battle
-    2.  Two routes
-            Route 1 = NPC Encounter – test(Strength: help NPC, Luck: steal) – Failed = battle
-            Route 2 = NPC Encounter – test(Intelligence: help NPC, Game-chance) – Failed = battle
-    3.  Merchant encounter
+    2. Two routes
+            Route 1 = NPC Encounter – test (Strength: help NPC, Luck: steal) – Failed = battle
+            Route 2 = NPC Encounter – test (Intelligence: help NPC, Game-chance) – Failed = battle
+    3. Merchant encounter
             Luck (steal) = gain gold – Failed = battle
             Intelligence = new skill – Failed = nothing
             Game-chance = better price
@@ -53,9 +53,9 @@ Middle:
 ----------------------------------------------------------------------------
 
 End:
-    1.  Combat (Wolves)
-    2.  Camping (Camping system)
-    3.  Two routes (Routes system)
+    1. Combat (Wolves)
+    2. Camping (system)
+    3. Two routes (Routes system)
 -------------------------------------------------------------------------------
     1.1 Merchant (system)
     1.2 Clue about father
@@ -67,38 +67,40 @@ End:
     Extra: Story 3
 """
 
-#   Temporary dev-tasks
+# Temporary dev-tasks
 
-#   Start_game    (x)
-#   Difficulty    (x)
-#   History       (x)
-#   Select class  (x)
-#   Initial items (x)
-#   Initial stats (x)
-#   Stats structure = what I need to add: damage based on status (x), mana based on intelligence (x)
+# Start_game    (x)
+# Difficulty    (x)
+# History       (x)
+# Select class  (x)
+# Initial items (x)
+# Initial stats (x)
+# Stats structure = what I need to add: 
+# damage based on stats (x), mana based on intelligence (x)
 
-# Variable World
+# World variable
 world_difficulty = str()
 
-# Variable player
+# Player variable
 information_player = {
     "life": 500,
     "damage": 50,
     "block": 35,
     "class": "",
-    "inventory": ['health_potion'],
+    "inventory": ["health_potion"],
     "gold": 100,
     "mana": 50
-} 
+}
 
 player_stats = {
     "strength": 1,
     "intelligence": 1,
-    "dexterity": 1,
+    "dexterity": 1
 }
 
-# Variable Enemys
+# Enemy variable
 rats = {
+    "monster": "Giant Rat",
     "life": 250,
     "damage": 35,
     "block": 0,
@@ -106,139 +108,119 @@ rats = {
 }
 
 
-
 def start_game():
-    print("1.   Start Game")
-    print("2.   Exit")
-    user_choice = int(input("Select your choice[1/2]: "))
+    print("1. Start Game")
+    print("2. Exit")
+    user_choice = int(input("Select your choice [1/2]: "))
     os.system("cls")
+
     if user_choice == 1:
         def select_difficulty():
-            print("1.   Easy")
-            print("2.   Medium")
-            print("3.   Hard")
+            print("1. Easy")
+            print("2. Medium")
+            print("3. Hard")
             global world_difficulty
-            user_choice_difficulty = int(input("Enter your difficulty[1/2/3]: "))
+            user_choice_difficulty = int(input("Enter your difficulty [1/2/3]: "))
             if user_choice_difficulty == 1:
-                world_difficulty = 'Easy'
+                world_difficulty = "Easy"
             elif user_choice_difficulty == 2:
-                world_difficulty = 'Medium'
+                world_difficulty = "Medium"
             elif user_choice_difficulty == 3:
-                world_difficulty = 'Hard'
+                world_difficulty = "Hard"
 
         select_difficulty()
-        os.system('cls')
+        os.system("cls")
         game_history(1)
         select_class()
         while chapter_1():
             mother_history()
     else:
-        print("Have a good day")
+        print("Have a good day.")
 
-#   Functions History
+
+# History Function
 
 def game_history(history):
     def skip_history_function():
         skip_history = False
         while skip_history != True:
-            user_choice_skip = input("Press enter to skip ")
+            user_choice_skip = input("Press Enter to continue ")
             if user_choice_skip == "":
                 skip_history = True
 
-    history1 = "\nAn adventurer left the house he inherited from his missing father, leaving his mother to take care of it as he set out to explore the world.\n"
+    history1 = (
+        "\nAn adventurer left the house he inherited from his missing father, "
+        "leaving his mother to take care of it as he set out to explore the world.\n"
+    )
+
     mother_history = '''
-    Mother:
-    “So… the day has finally come for you to leave.”
-    She tries to smile, but her eyes reveal the fear of someone who has already lost someone once.
+Mother:
+“So… the day has finally come for you to leave.”
+She tries to smile, but her eyes reveal the fear of someone who has already lost someone once.
 
-    You:
-    “I have to find out what happened to Dad. And I want to see the world outside. I can’t stay here forever.”
+You:
+“I have to find out what happened to Dad. And I want to see the world outside.”
 
-    Mother:
-    “Your father said the exact same thing…”
-    She places her hand on your shoulder.
-    “And the world answered him with silence.”
-
-    You:
-    “I’m not him. And I’ll come back — I promise.”
-
-    Mother:
-    She takes a slow breath, trying to hide her worry.
-    “Promises are easy before crossing the door. Still… I believe in you.”
-
-    You:
-    “I’ll honor what he left me — the house, the memories… and the path.”
-
-    Mother:
-    “Take this.”
-    She hands you a small, worn amulet.
-    “Your father used to carry it when he was young. He said it brought him luck. Maybe it will work… if you still believe in such things.”
-
-    You:
-    “Thank you, Mother.”
-
-    Mother:
-    “And remember,” she says, her voice firm now,
-    “the world changes depending on the difficulty you choose to face. Be wise in your battles, humble in your victories, and brave in your defeats.”
-
-    She pulls you into a tight hug.
-
-    Mother:
-    “Now go… before I ask you to stay.”
-
-    '''
-    tutorial_combat = '''
-As soon as he left home and followed the old trail, the young adventurer heard quick scratches nearby. From behind some broken crates, a group of oversized rats appeared, hissing and ready to attack.
-
-It wasn’t a great danger — just a first test. He tightened his grip on his weapon. The journey had truly begun.
+Mother:
+“Your father said the exact same thing…”
 '''
-    history2 = "\nSun, the darkness takes me. I believe in you; one day, you will follow my path — the vulc...\n"
-    history3 = "\nThe father returned to his normal self, the world’s corruption vanished, and the young explorer returned home alongside his father.\n"
+
+    tutorial_combat = '''
+As soon as he left home and followed the old trail, the young adventurer heard quick scratches nearby. 
+From behind broken crates, giant rats appeared, hissing and ready to attack.
+
+It wasn’t a great danger — just a first test. The journey had truly begun.
+'''
+
+    history2 = "\nSun, the darkness takes me. I believe in you; one day, you will follow my path — the volc...\n"
+    history3 = "\nThe father returned to normal, the world’s corruption vanished, and the young explorer returned home.\n"
 
     if history == 1:
-        os.system('cls')
+        os.system("cls")
         print(history1)
         skip_history_function()
     elif history == 1.1:
-        os.system('cls')
+        os.system("cls")
         print(mother_history)
         skip_history_function()
     elif history == 1.2:
-        os.system('cls')
+        os.system("cls")
         print(tutorial_combat)
         skip_history_function()
     elif history == 2:
-        os.system('cls')
+        os.system("cls")
         print(history2)
         skip_history_function()
     elif history == 3:
-        os.system('cls')
+        os.system("cls")
         print(history3)
         skip_history_function()
     else:
-        print("Error! Verify history variables")
+        print("Error! Verify history variables.")
 
-#   Functions stats/class system
+
+# Class and Stats System
 
 def select_class():
     os.system("cls")
     print("\n1. Warrior")
     print("2. Mage")
     print("3. Rogue")
-    user_choice_class = int(input("Enter your class[1/2/3]: "))
+    user_choice_class = int(input("Enter your class [1/2/3]: "))
+
     if user_choice_class == 1:
-        print(f"\nYou picked Warrior")
+        print("\nYou picked Warrior")
         information_player["class"] = "warrior"
         player_stats["strength"] += 1
     elif user_choice_class == 2:
-        print(f"\nYou picked Mage")
+        print("\nYou picked Mage")
         information_player["class"] = "mage"
         player_stats["intelligence"] += 1
         information_player["mana"] += 100
         information_player["inventory"].append("mana_potion")
         mana_up()
     elif user_choice_class == 3:
-        print(f"\nYou picked Rogue")
+        print("\nYou picked Rogue")
         information_player["class"] = "rogue"
         player_stats["dexterity"] += 1
     else:
@@ -246,32 +228,78 @@ def select_class():
 
     class_damage_up()
 
+
 def class_damage_up():
     if information_player["class"] == "warrior":
-        information_player["damage"] += (player_stats["strength"] * 10)
+        information_player["damage"] += player_stats["strength"] * 10
     elif information_player["class"] == "mage":
-        information_player["damage"] += (player_stats["intelligence"] * 10)
+        information_player["damage"] += player_stats["intelligence"] * 10
     elif information_player["class"] == "rogue":
-        information_player["damage"] += (player_stats["dexterity"] * 10)
+        information_player["damage"] += player_stats["dexterity"] * 10
+
 
 def mana_up():
-    information_player["mana"] += (player_stats["intelligence"] * 10)
-
-def combat_menu():
-    for c in information_player:
-        print(f"{information_player[c]}")
-
-#   Function combat encounter
-"""def combat_rats():
-    print("Rats apears!")
-    while rats["life"]:
-"""
+    information_player["mana"] += player_stats["intelligence"] * 10
 
 
-#def chapter_1():
- #   game_history(1.1)
-  #  game_history(1.2)
+def block_damage(enemy):
+    print("You tried to defend.")
+    if enemy["damage"] > information_player["block"]:
+        damage_taken = enemy["damage"] - information_player["block"]
+        print("You failed to defend.")
+        print(f"Damage taken: {damage_taken}")
+    else:
+        print("You successfully defended!")
+    time.sleep(1)
 
-#start_game()
 
-combat_menu()
+def combat_menu(enemy):
+    while enemy["life"]:
+        os.system("cls")
+        print(f"""
+  ==========================
+          BATTLE MENU
+  ==========================
+  Enemy: {enemy['monster']}   HP: {enemy['life']}
+  You:   Adventurer           HP: {information_player['life']}  MP: {information_player['mana']}
+
+  1) Attack
+  2) Skill
+  3) Defend
+  4) Item
+  ==========================
+  Enter choice [1-4]:
+        """)
+
+        user_choice = int(input(""))
+
+        if user_choice == 1:
+            os.system("cls")
+            print(f"You dealt {information_player['damage']} damage!")
+            time.sleep(1)
+
+            enemy["life"] -= information_player["damage"]
+
+            enemy_turn = random.randint(1, 2)
+            if enemy_turn == 1:
+                os.system("cls")
+                print(f"""
+    ==========================
+            ENEMY TURN
+    ==========================
+    {enemy['monster']} attacked!
+                """)
+                block_damage(enemy)
+                time.sleep(1)
+            else:
+                os.system("cls")
+                print(f"""
+    ==========================
+            ENEMY TURN
+    ==========================
+    The {enemy['monster']}'s defense succeeded!
+                """)
+                time.sleep(1)
+
+
+combat_menu(rats)
