@@ -85,7 +85,7 @@ world_difficulty = str()
 information_player = {
     "life": 500,
     "damage": 50,
-    "block": 35,
+    "block": random.randint(25, 30),
     "class": "",
     "inventory": ["health_potion"],
     "gold": 100,
@@ -103,7 +103,7 @@ rats = {
     "monster": "Giant Rat",
     "life": 250,
     "damage": 35,
-    "block": 0,
+    "block": random.randint(15,20),
     "gold": 25
 }
 
@@ -132,8 +132,12 @@ def start_game():
         os.system("cls")
         game_history(1)
         select_class()
-        while chapter_1():
-            mother_history()
+        game_history(1.1)
+        game_history(1.2)
+        combat_menu(rats)
+        up_stats()
+        print(information_player['damage'])
+
     else:
         print("Have a good day.")
 
@@ -207,7 +211,6 @@ def select_class():
     print("2. Mage")
     print("3. Rogue")
     user_choice_class = int(input("Enter your class [1/2/3]: "))
-
     if user_choice_class == 1:
         print("\nYou picked Warrior")
         information_player["class"] = "warrior"
@@ -227,6 +230,45 @@ def select_class():
         print("Error!")
 
     class_damage_up()
+
+def up_stats():
+    points = 3
+    while points > 0:
+        os.system('cls')
+        print(f"""
+    ==========================
+            LEVEL UP!
+    ==========================
+        You have {points} points!
+
+        Wich stas do you want up
+            
+        1.  Strength
+        2.  Intelligence
+        3.  Dexterity  
+    """)
+        choice_user = int(input(""))
+        if choice_user == 1:
+             player_stats['strength'] += 1
+             points -= 1
+        elif choice_user == 2:
+            player_stats['intelligence'] += 1
+            points -= 1
+        elif choice_user == 3:
+            player_stats["dexterity"] += 1
+            points -= 1
+            class_damage_up()
+
+def show_stats():
+    print(f"""
+
+    Stength: {player_stats['strength']}
+    Intelligence: {player_stats['intelligence']}
+    Dexterity: {player_stats['dexterity']}
+
+""")
+
+
 
 
 def class_damage_up():
@@ -248,13 +290,13 @@ def block_damage(enemy):
         damage_taken = enemy["damage"] - information_player["block"]
         print("You failed to defend.")
         print(f"Damage taken: {damage_taken}")
+        information_player['life'] - damage_taken
     else:
         print("You successfully defended!")
     time.sleep(1)
 
-
-def combat_menu(enemy):
-    while enemy["life"]:
+def combat_menu(enemy): 
+    while enemy["life"] > 0 and information_player['life'] > 0:
         os.system("cls")
         print(f"""
   ==========================
@@ -268,38 +310,34 @@ def combat_menu(enemy):
   3) Defend
   4) Item
   ==========================
-  Enter choice [1-4]:
-        """)
+  Enter choice [1-4]:""")
 
         user_choice = int(input(""))
 
         if user_choice == 1:
-            os.system("cls")
-            print(f"You dealt {information_player['damage']} damage!")
-            time.sleep(1)
+            enemy_taken_damage = information_player['damage'] - enemy['block']
+            os.system('cls')
 
-            enemy["life"] -= information_player["damage"]
+            print(f"You dealt {enemy_taken_damage} damage")
+            enemy['life'] -= enemy_taken_damage
+            if enemy['life'] <= 0:
+                print('You killed him')
+                time.sleep(1.5)
+                break
+            #   Enemy turn
+            player_taken_damage = enemy['damage'] - information_player['block']  
+            information_player['life'] -= player_taken_damage
+            os.system('cls')
 
-            enemy_turn = random.randint(1, 2)
-            if enemy_turn == 1:
-                os.system("cls")
-                print(f"""
-    ==========================
-            ENEMY TURN
-    ==========================
-    {enemy['monster']} attacked!
-                """)
-                block_damage(enemy)
-                time.sleep(1)
-            else:
-                os.system("cls")
-                print(f"""
-    ==========================
-            ENEMY TURN
-    ==========================
-    The {enemy['monster']}'s defense succeeded!
-                """)
-                time.sleep(1)
+            print(f"""
+  ==========================
+          ENEMY TURN
+  ==========================
+
+    {enemy['monster']} will attatck!
+    He dealt {player_taken_damage}!
+""")
+            time.sleep(2)
 
 
-combat_menu(rats)
+start_game()
