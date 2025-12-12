@@ -11,3 +11,17 @@ rats = Enemy(
     damage = 50,
     mana = 25
 )
+
+bandits = Enemy(
+    monster = 'Bandit',
+    life = 500,
+    damage = 85,
+    mana = 50
+)
+
+wolves = Enemy(
+    monster = 'Wolves',
+    life = 1000,
+    damage = 100,
+    mana = 200
+)

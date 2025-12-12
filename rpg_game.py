@@ -3,9 +3,10 @@ import random
 import os
 from entities.player import *
 from entities.enemies import *
+from entities.npcs import *
 from systems.dialogue_system import game_history
 from systems.combat_system import combat
-
+from systems.event_encounters import *
 """
 Principal: Start, Middle, End
 
@@ -68,6 +69,16 @@ End:
     2.2 Middle of volcano (rest)
     2.3 Battle with father
     Extra: Story 3
+
+
+
+    1. Camping
+    2. Merchant
+    3. Wolves
+    4. Camping
+    5. letter's father
+    6. enter vulcan
+    7 battle with father
 """
 
 # Temporary dev-tasks
@@ -118,7 +129,11 @@ def start_game():
         game_history(1.2)
         combat(rats, player)
         up_stats()
-        print(player.damage)
+        camping_event(player.job)
+        up_stats()
+        merchant_event()
+        combat(wolves, player)
+        up_stats()
 
     else:
         print("Have a good day.")
@@ -177,9 +192,11 @@ def up_stats():
         if choice_user == 1:
              player.add_stat('strength', 1)
              points -= 1
+             class_damage_up()
         elif choice_user == 2:
             player.add_stat('intelligence', 1)
             points -= 1
+            class_damage_up()
         elif choice_user == 3:
             player.add_stat("dexterity", 1)
             points -= 1
@@ -208,8 +225,6 @@ def class_damage_up():
 
 def mana_up():
     player.mana += player.player_stats["intelligence"] * 10
-
-
 
 
 

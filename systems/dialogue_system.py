@@ -1,4 +1,5 @@
 import os
+from entities.npcs import *
 
 # History Function
 
@@ -34,6 +35,15 @@ From behind broken crates, giant rats appeared, hissing and ready to attack.
 It wasn’t a great danger — just a first test. The journey had truly begun.
 '''
 
+    jimmy_bob_dialogue = '''
+As you continue on your path, you see a strange figure approaching, and soon...
+
+Jimmy Bob: "YOOOOOOOOOO!! I'M JIMMY BOOOOOB!!!"
+Jimmy Bob: "THE GREATEST MERCHANT ALIVE — AND PROBABLY THE LOUDEST TOO!"
+Jimmy Bob: "I GOT POTIONS! I GOT WEAPONS! I GOT STUFF I DON’T EVEN KNOW WHAT IT DOES, BUT IT LOOKS AWESOME!"
+Jimmy Bob: "STEP RIGHT UP, TRAVELER! JIMMY BOOB’S DEALS ARE HOTTER THAN DRAGON BREATH!"
+'''
+
     history2 = "\nSun, the darkness takes me. I believe in you; one day, you will follow my path — the volc...\n"
     history3 = "\nThe father returned to normal, the world’s corruption vanished, and the young explorer returned home.\n"
 
@@ -49,6 +59,14 @@ It wasn’t a great danger — just a first test. The journey had truly begun.
         os.system("cls")
         print(tutorial_combat)
         skip_history_function()
+    elif history == 1.3:
+        os.system('cls')
+        print(jimmy_bob_dialogue)
+        skip_history_function()
+        print('\nCHECK MY ITENS:')
+        jimmy_bob.showItems()
+        jimmy_bob.buyItems()
+
     elif history == 2:
         os.system("cls")
         print(history2)
