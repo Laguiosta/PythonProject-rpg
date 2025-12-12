@@ -25,3 +25,17 @@ wolves = Enemy(
     damage = 100,
     mana = 200
 )
+
+goblins = Enemy(
+    monster = 'Goblins',
+    life = 1300,
+    damage = 150,
+    mana = 100
+)
+
+father = Enemy(
+    monster = 'Corrupted Father',
+    life = 3000,
+    damage = 200,
+    mana = 500
+)

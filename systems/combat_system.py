@@ -1,5 +1,6 @@
 import os
 import time
+import sys
 
 from entities.enemies import *    
 from entities.player import player, Player
@@ -39,6 +40,10 @@ def combat(enemy, player) -> None:
 
             # Enemy turn
             player.life -= enemy.damage
+            if player.life <= 0:
+                print('You died...')
+                time.sleep(1)
+                sys.exit(0)
             os.system('cls')
 
             print(f"""
@@ -76,6 +81,10 @@ def combat(enemy, player) -> None:
 
                     # Enemy counter-attack
                     player.life -= enemy.damage
+                    if player.life <= 0:
+                        print('You died...')
+                        time.sleep(1)
+                        sys.exit(0)
                     print(f"\nEnemy attacked for {enemy.damage}!")
                     time.sleep(1.5)
             else:

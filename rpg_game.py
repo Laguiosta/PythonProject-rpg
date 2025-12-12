@@ -72,11 +72,11 @@ End:
 
 
 
-    1. Camping
-    2. Merchant
-    3. Wolves
-    4. Camping
-    5. letter's father
+    1. Camping x
+    2. Merchant x
+    3. Wolves x
+    4. Camping x 
+    5. letter's father x
     6. enter vulcan
     7 battle with father
 """
@@ -132,8 +132,18 @@ def start_game():
         camping_event(player.job)
         up_stats()
         merchant_event()
+        game_history(1.4)
         combat(wolves, player)
+        player.life = 500
         up_stats()
+        camping_event(player.job)
+        up_stats()
+        game_history(2)
+        game_history(2.1)
+        combat(father, player)
+        up_stats()
+        game_history(3)
+
 
     else:
         print("Have a good day.")

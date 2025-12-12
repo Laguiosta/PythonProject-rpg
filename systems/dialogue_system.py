@@ -46,6 +46,28 @@ Jimmy Bob: "STEP RIGHT UP, TRAVELER! JIMMY BOOB’S DEALS ARE HOTTER THAN DRAGON
 
     history2 = "\nSun, the darkness takes me. I believe in you; one day, you will follow my path — the volc...\n"
     history3 = "\nThe father returned to normal, the world’s corruption vanished, and the young explorer returned home.\n"
+    enter_vulcan = '''
+\nAs you enter the volcano, the scorching air burns your lungs and the glow of molten rock lights the cavern. Ahead, a familiar figure stands atop the stone.
+It’s your father — or what remains of him.
+
+His eyes shine with a twisted, dark energy, the same corruption mentioned in his letter.
+
+“I… couldn’t resist it,” he says, his voice trembling. “If you’ve come this far, then you know what must be done.”
+
+The energy around him surges, warping the air.
+
+“Face me… before I lose myself completely.”
+
+The battle begins.
+'''
+    wolves = '''
+You press forward on your journey when a strange sound breaks the silence…
+Your instincts sharpen as you sense several creatures watching you from within the forest.
+The dense foliage hides their shapes, blocking what little sunlight filters through the trees.
+But soon, their silhouettes become unmistakable—wolves.
+They emerge from the shadows, fanning out as they begin to surround you.
+The air grows tense. Your next move may decide your fate…
+'''
 
     if history == 1:
         os.system("cls")
@@ -66,10 +88,17 @@ Jimmy Bob: "STEP RIGHT UP, TRAVELER! JIMMY BOOB’S DEALS ARE HOTTER THAN DRAGON
         print('\nCHECK MY ITENS:')
         jimmy_bob.showItems()
         jimmy_bob.buyItems()
+    elif history == 1.4:
+        print(wolves)
+        skip_history_function()
 
     elif history == 2:
         os.system("cls")
         print(history2)
+        skip_history_function()
+    elif history == 2.1:
+        os.system('cls')
+        print(enter_vulcan)
         skip_history_function()
     elif history == 3:
         os.system("cls")

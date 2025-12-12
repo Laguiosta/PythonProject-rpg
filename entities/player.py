@@ -4,7 +4,6 @@ class Player:
         self.damage = damage
         self.mana = mana
         self.job = job
-
         # Base stats for the player
         self.player_stats = {
             "strength": 1,
@@ -13,7 +12,9 @@ class Player:
         }
 
         # Player inventory (item_name: quantity)
-        self.player_inventory = {}
+        self.player_inventory = {
+            'Health Potion': 2
+        }
 
     def add_stat(self, stat, value):
         # Increase a specific stat by a given value
@@ -66,7 +67,7 @@ class Player:
     # ITEM EFFECTS ------------------
 
     def use_health_potion(self):
-        heal = 150
+        heal = 300
         self.life += heal
         print(f"You used a Health Potion and recovered {heal} HP!")
 
